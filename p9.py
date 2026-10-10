@@ -7,14 +7,16 @@ import seaborn as sns
 class SalesDataAnalyzer():
     def __init__(self):
         self.data=None
-    def __del__(self):
-        print("object is deleted")
+    # def __del__(self):
+    #     print("object is deleted")
     def load_data(self,file_path):
         
         self.data=pd.read_csv(file_path,encoding='latin1')
         print("data load succesfully")
         print(self.data)
-  
+    def display_columns(self):
+        print("columns name are")
+        print(self.data.columns)
         
     def explore_data(self):
         while True:
@@ -110,7 +112,32 @@ class SalesDataAnalyzer():
         
         
     def split_data(self):
-        print("")
+        while True:
+            print("split data into two parts based on condition")
+            print("1.by loc")
+            print("2.by iloc")
+            print("3.go to main menu")
+            choice1=int(input("enter the choice"))
+            match choice1:
+                case 1:
+                    self.data.reset_index(inplace=True)
+                    start_range=int(input("enter the start_range"))
+                    end_range=int(input("enter the end_range"))
+                    df2=self.data.loc[start_range:end_range]
+                    print(df2)
+                   
+                case 2:
+                     
+                     start_range=int(input("enter the start_range"))
+                     end_range=int(input("enter the end_range"))
+                     df2=self.data.iloc[start_range:end_range]
+                     print(df2)
+                case 3:
+                    break
+                    
+                 
+        
+        
     def dataframe_operations(self):
             while True:
                 print("1.mathematical operations")
@@ -271,7 +298,7 @@ class SalesDataAnalyzer():
                 
         
     def create_pivot_table(self):
-        
+        h1.display_columns()
         index_name=input("enter the index for pivot tha dataset")
         column_name=input("enter the column name for pivot the dataset")
         valuess=input("enter the values for pivot the dataset")
@@ -291,6 +318,7 @@ class SalesDataAnalyzer():
             print("6.stackplot")
             print("7.subplot")
             print("8.go to main menu")
+            h1.display_columns()
             choice6=int(input("enter the choice"))
             match choice6:
                 case 1:
@@ -434,7 +462,7 @@ while True:
     choice1=int(input("Enter the choice....."))
     match choice1:
         case 1:
-            h1.load_data(r"C:/Users/kushw/OneDrive/Desktop/python/project9/pandas-visualizer/shopify_sales_dataset_ml_eda5.csv")
+            h1.load_data(r"C:/Users/kushw/OneDrive/Desktop/python/project9/shopify_sales_dataset_ml_eda5.csv")
         case 2:
             h1.explore_data()
         case 3:
