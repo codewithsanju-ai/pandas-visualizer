@@ -306,7 +306,7 @@ class SalesDataAnalyzer():
         agg_func=input("enter the aggegate function for pivot the dataset")
         new_df=pd.pivot_table(data=self.data,index=index_name,columns=column_name,values=valuess,aggfunc=agg_func)    
         print(new_df) 
-           
+      
     def visualize_data(self):
         
         while True:
@@ -322,45 +322,46 @@ class SalesDataAnalyzer():
             choice6=int(input("enter the choice"))
             match choice6:
                 case 1:
-                 x_column = input("Enter the X column name: ")
-                 y_column = input("Enter the Y column name: ")
-
-                 plt.bar(
-                     self.data[x_column],
-                     self.data[y_column],
+                    x_column = input("Enter the X column name: ")
+                    y_column = input("Enter the Y column name: ")
+             
+                    plt.bar(
+                   self.data[x_column],
+                   self.data[y_column],
                      color="skyblue"
-                 )
-
-                 plt.title(f"{y_column} by {x_column}")
-                 plt.xlabel(x_column)
-                 plt.ylabel(y_column)
-
-                 plt.xticks(rotation=45)
-                 plt.tight_layout()
-                 
-                 plt.show()
+                     )
+             
+                    plt.title(f"{y_column} by {x_column}")
+                    plt.xlabel(x_column)
+                    plt.ylabel(y_column)
+             
+                    plt.xticks(rotation=45)
+                    plt.tight_layout()
+                    h1.save_visualization("mybarplot")
+                              
+                    plt.show()       
 
 
                 case 2:
-                   x_column = input("Enter the X column name: ")
-                   y_column = input("Enter the Y column name: ")
-
-                   plt.plot(
-                       self.data[x_column],
-                       self.data[y_column],
-                       color="green",
-                       marker="o"
-                   )
-
-                   plt.title(f"{y_column} vs {x_column}")
-                   plt.xlabel(x_column)
-                   plt.ylabel(y_column)
-
-                   plt.xticks(rotation=45)
-                   plt.tight_layout()
-                   plt.show()
-
-
+                   
+                    x_column = input("Enter the X column name: ")
+                    y_column = input("Enter the Y column name: ")
+                                 
+                    plt.plot(
+                            self.data[x_column],
+                            self.data[y_column],
+                            color="green",
+                            marker="o"
+                        )
+                                 
+                    plt.title(f"{y_column} vs {x_column}")
+                    plt.xlabel(x_column)
+                    plt.ylabel(y_column)
+                                 
+                    plt.xticks(rotation=45)
+                    plt.tight_layout()
+                    h1.save_visualization("mylineplot")
+                    plt.show()
                 case 3:
                    x_column = input("Enter the X column name: ")
                    y_column = input("Enter the Y column name: ")
@@ -376,6 +377,7 @@ class SalesDataAnalyzer():
                    plt.ylabel(y_column)
 
                    plt.tight_layout()
+                   h1.save_visualization("myscatterplot")
                    plt.show()
                 case 4:
                      label_name = input("Enter the label name for pie chart: ")
@@ -385,6 +387,7 @@ class SalesDataAnalyzer():
                          labels=self.data[label_name]
                      )
                      plt.title(f"Distribution of {value_column}")
+                     h1.save_visualization("mypieplot")
                      plt.show()
                 case 5:
                     column_name = input("Enter the column name for histogram: ")
@@ -397,20 +400,24 @@ class SalesDataAnalyzer():
                     plt.title(f"Histogram of {column_name}")
                     plt.xlabel(column_name)
                     plt.ylabel("Frequency")
+                    h1.save_visualization("myhistplot")
                     plt.show()
                 case 6:
                     x_column = input("Enter the X column name for stack plot: ")
-                    y_column = input("Enter the Y column name for stack plot: ")
+                    y_column=input("Enter the X column name for stack plot: ")
+                    y2_column = input("Enter the Y column name for stack plot: ")
+                    x = np.arange(len(x_column))
                     plt.stackplot(
-                        self.data[x_column],
+                        x,
                         self.data[y_column],
-                        labels=[y_column],
-                        colors=["blue"]
+                        self.data[y2_column],
+                        labels=['revenue','profit']
                     )
                     plt.title(f"Stack Plot of {y_column} vs {x_column}")
                     plt.xlabel(x_column)
                     plt.ylabel(y_column)
                     plt.legend()
+                    h1.save_visualization("mystackplot")
                     plt.show()
                 case 7:
                     x_column = input("Enter the X column name for subplots: ")
@@ -425,6 +432,7 @@ class SalesDataAnalyzer():
                     axs[1].set_xlabel(y_column)
                     axs[1].set_ylabel("Frequency")
                     plt.tight_layout()
+                    h1.save_visualization("mysubplot")
                     plt.show()
                 case 8:
                     break
@@ -441,8 +449,17 @@ class SalesDataAnalyzer():
                     self.create_pivot_table()
                 case 3:
                     break
-    def save_visualization(self):
-        print()
+    def save_visualization(self,filename):
+        choice = input("Do you want to save this graph? (y/n): ")
+
+        if choice.lower() == "y":
+         plt.savefig(filename, dpi=300, bbox_inches="tight")
+         print(f"Graph saved successfully as {filename}")
+        elif choice.lower() == "n":
+         print("Graph not saved.")
+        else:
+         print("Invalid choice. Graph not saved.")
+                   
 h1=SalesDataAnalyzer()
 
 # THIS IS USE FOR DELETE OBJECT OF CLASS 
@@ -456,8 +473,7 @@ while True:
     print("4.Handle missing Data")
     print("5.Generate Descriptive Statistics")
     print("6.Data visualization")
-    print("7.Save Visualization ")
-    print("8.Exit")
+    print("7.Exit")
     
     choice1=int(input("Enter the choice....."))
     match choice1:
@@ -474,8 +490,6 @@ while True:
         case 6:
             h1.data_visualization()
         case 7:
-            h1.save_visualization()
-        case 8:
             print("exit from the program")
             break
         case _:
